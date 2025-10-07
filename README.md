@@ -1,132 +1,205 @@
-# RailSaathi - AI-Powered Railway Assistance System
+# RailSaathi 🚂 - AI-Powered Railway Assistance System
 
-## Project Overview
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Flask-3.x-green)](https://flask.palletsprojects.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**RailSaathi** is an AI-powered railway assistance system that simplifies ticket booking for the Indian Railways. It features user authentication, train search, real-time seat booking, and AI-driven suggestions. Built with Flask, SQLite, and JavaScript, this project aims to enhance user experience and streamline railway operations. Deployable on Render.
+## 📋 Project Overview
 
----
-
-## Features
-
-- **User Authentication**: Secure login and registration processes.
-- **Train Search Functionality**: Search for trains between specified source and destination stations.
-- **Seat Booking**: Real-time seat booking with immediate confirmation.
-- **AI-Powered Suggestions**: Intelligent recommendations for seat selection.
-- **User Dashboard**: Manage bookings and view travel history.
-- **Responsive Design**: Mobile-friendly interface for all devices.
+**RailSaathi** is an AI-powered railway assistance system that simplifies train ticket booking for Indian Railways. It integrates with the IRCTC RapidAPI to provide real-time train search, seat availability checking, and booking management. Built with Flask, SQLAlchemy, and modern web technologies, RailSaathi delivers a seamless booking experience.
 
 ---
 
-## Technologies Used
+## ✨ Features
 
-- **Backend**: Flask (Python)
-- **Database**: SQLite with SQLAlchemy ORM
-- **Frontend**: HTML, CSS, JavaScript
-- **AI Model**: Machine learning algorithms for seat suggestions
-- **Deployment**: Render
+- 🔐 **User Authentication**: Secure registration, login, and password recovery
+- 🔍 **Real-Time Train Search**: Search trains between stations with live data
+- 💺 **Seat Availability**: Check live seat status for all classes
+- 📊 **User Dashboard**: Manage bookings and view travel history
+- 💳 **Payment Integration**: Razorpay payment gateway support
+- 🎨 **Responsive Design**: Mobile-friendly Bootstrap 5 interface
+- ⚡ **Session Management**: Secure sessions with automatic timeout
+- 🔒 **CSRF Protection**: Form security with Flask-WTF
 
 ---
 
-## Setup and Installation
+## 🛠️ Technologies Used
+
+### Backend
+- **Framework**: Flask 3.x
+- **Database**: SQLite (Development) / PostgreSQL (Production)
+- **ORM**: SQLAlchemy with Flask-SQLAlchemy
+- **Migrations**: Flask-Migrate (Alembic)
+- **Forms**: Flask-WTF
+- **WSGI Server**: Waitress
+
+### Frontend
+- **UI Framework**: Bootstrap 5.3.3
+- **Icons**: Bootstrap Icons
+- **Templating**: Jinja2
+
+### APIs & Integration
+- **Train Data**: IRCTC RapidAPI
+- **Payment**: Razorpay
+- **AI Features**: OpenAI (planned)
+
+---
+
+## 📚 Documentation
+
+Comprehensive documentation is available in the `/docs` folder:
+
+- **[Setup Guide](docs/SETUP.md)** - Installation and configuration instructions
+- **[API Documentation](docs/API.md)** - IRCTC API integration details and field descriptions
+- **[Architecture](docs/ARCHITECTURE.md)** - Project structure and design patterns
+- **[Deployment Guide](docs/DEPLOYMENT.md)** - Deploy to Render, Heroku, or VPS
+
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Python 3.13.0 installed
-- SQLite3 installed
-- Git installed
+- Python 3.8 or higher
+- pip package manager
+- RapidAPI account (for IRCTC API access)
+- Git (optional)
 
-### Steps to Run Locally
+### Installation
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/RailSaathi.git
+   git clone https://github.com/AyushGoel0/Rail-Saathi.git
+   cd Rail-Saathi
    ```
 
-2. **Change into the project directory**:
+2. **Create virtual environment**:
    ```bash
-   cd RailSaathi
-   ```
+   # Windows
+   python -m venv venv
+   .\venv\Scripts\activate
 
-3. **Create a virtual environment and activate it**:
-   ```bash
+   # macOS/Linux
    python3 -m venv venv
+   source venv/bin/activate
    ```
-   - **On Windows**:
-     ```bash
-     venv\Scripts\activate
-     ```
-   - **On macOS/Linux**:
-     ```bash
-     source venv/bin/activate
-     ```
 
-4. **Install the required dependencies**:
+3. **Install dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
 
-5. **Set up the database**:
-   - Import the provided SQL script to set up the database:
-     ```sql
-     railsaathi.sql
-     ```
-   - Update the `.env` file with your SQLite credentials:
-     ```plaintext
-     DB_URI=sqlite:///railsathi.db
-     ```
+4. **Configure environment variables**:
+   Create a `.env` file in the project root:
+   ```env
+   SECRET_KEY=your_secret_key_here
+   FLASK_APP=app.app
+   FLASK_ENV=development
+   DATABASE_URL=sqlite:///instance/railsaathi.db
+   RAPIDAPI_KEY=your_rapidapi_key_here
+   ```
+
+5. **Initialize database**:
+   ```bash
+   flask db upgrade
+   ```
 
 6. **Run the application**:
    ```bash
-   python app.py
+   flask run
    ```
 
 7. **Access the application**:
-   Open your browser and visit:
-   ```plaintext
-   http://127.0.0.1:5000
-   ```
+   Open your browser and visit `http://localhost:5000`
+
+For detailed setup instructions, see **[docs/SETUP.md](docs/SETUP.md)**.
 
 ---
 
-## Deployment
+## 📁 Project Structure
 
-### Render
+```
+Rail-Saathi/
+├── app/                    # Main application package
+│   ├── __init__.py        # App factory and initialization
+│   ├── routes.py          # Blueprint routes
+│   ├── models.py          # Database models
+│   ├── forms.py           # WTForms definitions
+│   ├── auth.py            # Authentication logic
+│   ├── bookings.py        # Booking management
+│   ├── trains.py          # Train API integration
+│   ├── static/            # CSS, JS, images
+│   └── templates/         # Jinja2 templates
+├── docs/                  # Documentation
+│   ├── API.md            # API documentation
+│   ├── SETUP.md          # Setup guide
+│   ├── ARCHITECTURE.md   # Architecture docs
+│   └── DEPLOYMENT.md     # Deployment guide
+├── instance/              # Instance-specific files
+├── migrations/            # Database migrations
+├── requirements.txt       # Python dependencies
+├── manage.py             # Management script
+└── README.md             # This file
+```
 
-1. Add a `.env` file with your environment variables:
-   ```plaintext
-   DB_URI=sqlite:///railsathi.db
-   DATABASE_URL=sqlite:///railsaathi.db
-   SECRET_KEY=your_secret_key
-   FLASK_APP=app.app
-   ```
-2. Update the `render.yaml` with necessary deployment configurations.
-3. Push the changes to your repository and link it with Render.
+For detailed architecture information, see **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
 
 ---
 
-## Environment Variables
+## 🌐 Deployment
 
-- Make sure `.env` is added to `.gitignore` for security.
-- Required variables:
-  - `DB_URI`: SQLite database connection string.
-  - `DATABASE_URL`: SQLite database connection string.
-  - `SECRET_KEY`: Your secret key for Flask application.
-  - `FLASK_APP`: Entry point of your Flask application.
+RailSaathi can be deployed to various platforms:
+
+### Render (Recommended)
+```bash
+# Using render.yaml blueprint
+1. Connect GitHub repository
+2. Render auto-detects configuration
+3. Add environment variables
+4. Deploy
+```
+
+### Heroku
+```bash
+heroku create rail-saathi
+heroku addons:create heroku-postgresql:essential-0
+git push heroku main
+```
+
+### VPS (Ubuntu/Linux)
+```bash
+# Using Gunicorn + Nginx
+# See docs/DEPLOYMENT.md for complete guide
+```
+
+For complete deployment instructions, see **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**.
 
 ---
 
-## File Structure Overview
+## 🔑 Environment Variables
 
-- **`app/`**: Contains all Python scripts and core logic.
-  - `ai_logic.py`: AI recommendation system logic.
-  - `auth.py`: User authentication.
-  - `bookings.py`: Booking management.
-  - `forms.py`: Web forms.
-  - `models.py`: Database models.
-  - `trains.py`: Train search and management.
-- **`static/`**: Static assets like CSS, JavaScript, and images.
-- **`templates/`**: HTML templates for rendering pages.
-- **`migrations/`**: Alembic migration files for database changes.
+Required environment variables:
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `SECRET_KEY` | Flask secret key | `abc123...` |
+| `DATABASE_URL` | Database connection string | `sqlite:///railsaathi.db` |
+| `RAPIDAPI_KEY` | IRCTC RapidAPI key | Your API key |
+| `FLASK_ENV` | Environment mode | `development` or `production` |
+
+See **[docs/SETUP.md#environment-configuration](docs/SETUP.md#environment-configuration)** for complete list.
+
+---
+
+## 📖 API Integration
+
+RailSaathi integrates with the IRCTC RapidAPI for real-time train data:
+
+- **Train Search**: Find trains between stations
+- **Seat Availability**: Check live seat status
+- **Train Information**: Departure times, duration, class types
+
+For API documentation and field descriptions, see **[docs/API.md](docs/API.md)**.
 
 ---
 
